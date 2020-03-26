@@ -1,8 +1,9 @@
-package ru.itis.maletskov;
+package ru.itis.maletskov.first;
 
 public class Data {
 
-    public static final int BLOCK_SIZE = 16; // длина блока
+    // длина блока
+    public static final int BLOCK_SIZE = 16;
 
     // таблица прямого нелинейного преобразования
     public static final byte[] LINEAR_TRANSFORMATION = {

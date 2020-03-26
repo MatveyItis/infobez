@@ -1,11 +1,11 @@
-package ru.itis.maletskov;
+package ru.itis.maletskov.first;
 
 import javax.xml.bind.DatatypeConverter;
 
-import static ru.itis.maletskov.Data.BLOCK_SIZE;
-import static ru.itis.maletskov.Data.LINEAR_TRANSFORMATION;
-import static ru.itis.maletskov.Data.LINEAR_VECTOR;
-import static ru.itis.maletskov.Data.REVERSE_LINEAR_TRANSFORMATION;
+import static ru.itis.maletskov.first.Data.BLOCK_SIZE;
+import static ru.itis.maletskov.first.Data.LINEAR_TRANSFORMATION;
+import static ru.itis.maletskov.first.Data.LINEAR_VECTOR;
+import static ru.itis.maletskov.first.Data.REVERSE_LINEAR_TRANSFORMATION;
 
 public class Kuznechik {
 
