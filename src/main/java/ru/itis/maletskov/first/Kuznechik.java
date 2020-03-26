@@ -3,9 +3,9 @@ package ru.itis.maletskov.first;
 import javax.xml.bind.DatatypeConverter;
 
 import static ru.itis.maletskov.first.Data.BLOCK_SIZE;
-import static ru.itis.maletskov.first.Data.LINEAR_TRANSFORMATION;
+import static ru.itis.maletskov.first.Data.PI;
 import static ru.itis.maletskov.first.Data.LINEAR_VECTOR;
-import static ru.itis.maletskov.first.Data.REVERSE_LINEAR_TRANSFORMATION;
+import static ru.itis.maletskov.first.Data.REVERSE_PI;
 
 public class Kuznechik {
 
@@ -40,7 +40,7 @@ public class Kuznechik {
             if (data < 0) {
                 data = data + 256;
             }
-            outData[i] = LINEAR_TRANSFORMATION[data];
+            outData[i] = PI[data];
         }
         return outData;
     }
@@ -95,7 +95,7 @@ public class Kuznechik {
             if (data < 0) {
                 data = data + 256;
             }
-            outData[i] = REVERSE_LINEAR_TRANSFORMATION[data];
+            outData[i] = REVERSE_PI[data];
         }
         return outData;
     }
@@ -167,7 +167,7 @@ public class Kuznechik {
     }
 
     // функция шифрования блока
-    public static byte[] kuznechikEncrypt(byte[] blk) {
+    public byte[] kuznechikEncrypt(byte[] blk) {
         byte[] outBlk = blk;
         for (int i = 0; i < 9; i++) {
             outBlk = kuznechikX(keys[i], outBlk);
@@ -179,7 +179,7 @@ public class Kuznechik {
     }
 
     //функция расшифрования блока
-    public static byte[] kuznechikDecrypt(byte[] blk) {
+    public byte[] kuznechikDecrypt(byte[] blk) {
         byte[] outBlk = kuznechikX(blk, keys[9]);
         for (int i = 8; i >= 0; i--) {
             outBlk = reverseL(outBlk);
@@ -189,12 +189,16 @@ public class Kuznechik {
         return outBlk;
     }
 
+    public Kuznechik() {
+        kuznechikExpandKey(key1, key2);
+    }
+
     public static void main(String[] args) {
         String openText = "8899AABBCCDDEEFF0077665544332211";
-        kuznechikExpandKey(key1, key2);
-        byte[] encryptBlock = kuznechikEncrypt(DatatypeConverter.parseHexBinary(openText));
+        Kuznechik kuznechik = new Kuznechik();
+        byte[] encryptBlock = kuznechik.kuznechikEncrypt(DatatypeConverter.parseHexBinary(openText));
         System.out.println(DatatypeConverter.printHexBinary(encryptBlock));
-        byte[] decryptBlock = kuznechikDecrypt(encryptBlock);
+        byte[] decryptBlock = kuznechik.kuznechikDecrypt(encryptBlock);
         System.out.println(DatatypeConverter.printHexBinary(decryptBlock));
     }
 }
