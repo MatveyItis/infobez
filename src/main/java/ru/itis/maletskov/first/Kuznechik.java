@@ -195,11 +195,12 @@ public class Kuznechik {
     }
 
     public static void main(String[] args) {
-        String openText = "8899AABBCCDDEEFF0077665544332211";
+        String openText = "00000000000000000000000000000000";
+        System.out.println("Text block: " + openText);
         Kuznechik kuznechik = new Kuznechik();
         byte[] encryptBlock = kuznechik.kuznechikEncrypt(DatatypeConverter.parseHexBinary(openText));
-        System.out.println(DatatypeConverter.printHexBinary(encryptBlock));
+        System.out.println("Encrypt block: " + DatatypeConverter.printHexBinary(encryptBlock));
         byte[] decryptBlock = kuznechik.kuznechikDecrypt(encryptBlock);
-        System.out.println(DatatypeConverter.printHexBinary(decryptBlock));
+        System.out.println("Decrypt block: " + DatatypeConverter.printHexBinary(decryptBlock));
     }
 }
