@@ -18,13 +18,14 @@ public class Kuznechik {
             0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x00, (byte) 0xff, (byte) 0xee,
             (byte) 0xdd, (byte) 0xcc, (byte) 0xbb, (byte) 0xaa, (byte) 0x99, (byte) 0x88
     };
+
     public static byte[] key2 = {
             (byte) 0xef, (byte) 0xcd, (byte) 0xab, (byte) 0x89, 0x67, 0x45, 0x23, 0x01,
             0x10, 0x32, 0x54, 0x76, (byte) 0x98, (byte) 0xba, (byte) 0xdc, (byte) 0xfe
     };
 
     // функция X
-    static private byte[] kuznechikX(byte[] a, byte[] b) {
+    private static byte[] kuznechikX(byte[] a, byte[] b) {
         byte[] c = new byte[BLOCK_SIZE];
         for (int i = 0; i < BLOCK_SIZE; i++) {
             c[i] = (byte) (a[i] ^ b[i]);
@@ -33,7 +34,7 @@ public class Kuznechik {
     }
 
     // Функция S
-    static private byte[] kuznechikS(byte[] inData) {
+    private static byte[] kuznechikS(byte[] inData) {
         byte[] outData = new byte[inData.length];
         for (int i = 0; i < BLOCK_SIZE; i++) {
             int data = inData[i];
@@ -46,7 +47,7 @@ public class Kuznechik {
     }
 
     // умножение в поле Галуа
-    static private byte multipleGalua(byte a, byte b) {
+    private static byte multipleGalua(byte a, byte b) {
         byte c = 0;
         byte hiBit;
         for (int i = 0; i < 8; i++) {
@@ -64,7 +65,7 @@ public class Kuznechik {
     }
 
     // функция R сдвигает данные и реализует уравнение, представленное для расчета L-функции
-    static private byte[] kuznechikR(byte[] state) {
+    private static byte[] kuznechikR(byte[] state) {
         byte a15 = 0;
         byte[] internal = new byte[16];
         for (int i = 15; i >= 0; i--) {
@@ -79,7 +80,7 @@ public class Kuznechik {
         return internal;
     }
 
-    static private byte[] kuznechikL(byte[] inData) {
+    private static byte[] kuznechikL(byte[] inData) {
         byte[] internal = inData;
         for (int i = 0; i < 16; i++) {
             internal = kuznechikR(internal);
@@ -88,7 +89,7 @@ public class Kuznechik {
     }
 
     // функция S^(-1)
-    static private byte[] reverseS(byte[] inData) {
+    private static byte[] reverseS(byte[] inData) {
         byte[] outData = new byte[inData.length];
         for (int i = 0; i < BLOCK_SIZE; i++) {
             int data = inData[i];
@@ -100,7 +101,7 @@ public class Kuznechik {
         return outData;
     }
 
-    static private byte[] reverseR(byte[] state) {
+    private static byte[] reverseR(byte[] state) {
         byte a0 = state[15];
         byte[] internal = new byte[16];
         for (int i = 1; i < 16; i++) {
@@ -111,7 +112,7 @@ public class Kuznechik {
         return internal;
     }
 
-    static private byte[] reverseL(byte[] inData) {
+    private static byte[] reverseL(byte[] inData) {
         byte[] internal = inData;
         for (int i = 0; i < 16; i++) {
             internal = reverseR(internal);
@@ -120,7 +121,7 @@ public class Kuznechik {
     }
 
     // функция расчета констант
-    static private void calculateConstants() {
+    private static void calculateConstants() {
         byte[][] iterNum = new byte[32][16];
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < BLOCK_SIZE; j++) {
@@ -134,7 +135,7 @@ public class Kuznechik {
     }
 
     // функция, выполняющая преобразования ячейки Фейстеля
-    static private byte[][] kuznechikFeystel(byte[] inKey1, byte[] inKey2, byte[] iterConst) {
+    private static byte[][] kuznechikFeystel(byte[] inKey1, byte[] inKey2, byte[] iterConst) {
         byte[] internal;
         internal = kuznechikX(inKey1, iterConst);
         internal = kuznechikS(internal);
